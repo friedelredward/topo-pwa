@@ -63,5 +63,6 @@ export class GameComponent implements OnInit, OnDestroy{
   }
 
   ngOnDestroy(): void {
+    console.log("destroying..., linter warning avoid.")
   }
 }
