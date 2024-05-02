@@ -6,6 +6,9 @@ import {MatOption, MatSelect} from "@angular/material/select";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatButtonModule} from "@angular/material/button";
 import {FormsModule} from "@angular/forms";
+import {TopoComponent} from "../topo/topo.component";
+import {GameService} from "../shared/services/game.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 export enum LevelSpeed{
   LOW= "LOW",
@@ -13,9 +16,9 @@ export enum LevelSpeed{
   HIGH= "HIGH"
 }
 export const LEVEL_TO_MS ={
-  LOW: 500,
+  LOW: 2000,
   MEDIUM: 750,
-  HIGH: 1000
+  HIGH: 500
 }
 export const LEVEL_TO_PTS ={
   LOW: 10,
@@ -34,35 +37,109 @@ export const LEVEL_TO_PTS ={
     MatOption,
     MatButtonModule,
     MatFormFieldModule,
+
+    TopoComponent
   ],
   templateUrl: './game.component.html',
   styleUrl: './game.component.scss'
 })
 export class GameComponent implements OnInit, OnDestroy{
   readonly levelSpeed= LevelSpeed;
-  readonly level2ms= LEVEL_TO_MS;
   readonly BOARD_CELLS= 9;
   username: string | null = '';
   isGameRunning= false;
-  gameSpeed: number= LEVEL_TO_MS[LevelSpeed.LOW];
+  actualLvl= LevelSpeed.LOW;
+  gameSpeedMs: number= LEVEL_TO_MS[this.actualLvl];
   actualPoints: number= 0;
+  moles= new Array(this.BOARD_CELLS).fill(0).map((x,i)=> i);
+  visibleMole: number| undefined;
+  private intervalId: number | null= null;
 
-  constructor(private route: ActivatedRoute) {  }
+  constructor(private route: ActivatedRoute,
+    private _snackBar: MatSnackBar,
+    private gameService: GameService
+  ) {  }
 
   ngOnInit(): void {
+    //get username
     this.username= this.route.snapshot.paramMap.get('id');
-    //get actualpoints for username
+    //set actualpoints for username
+    const playerScore= this.gameService.getPlayerScore(this.username);
+    this.actualPoints= playerScore && playerScore !== this.actualPoints ? playerScore: this.actualPoints;
   }
 
-  stopGame() {
+  stopGame(): void {
     this.isGameRunning= false;
+    if (this.intervalId) clearInterval(this.intervalId);
+    this.visibleMole= undefined;
   }
 
-  startGame() {
+  startGame(): void {
     this.isGameRunning=true;
+    this.getNewVisibleMole(this.visibleMole);
+    this.setNewInterval(this.gameSpeedMs)
   }
+
+  onMoleHit(isMoleHit: boolean, moleIndex: number){
+    if (isMoleHit) this.openSnackBar();
+    this.updatePoints(isMoleHit);
+    this.getNewVisibleMole(moleIndex);
+  }
+
+  /**
+   * On level change handler.
+   * Also updates game speed.
+   * @param event
+   */
+  onLvlSpeedChange(event: LevelSpeed) {
+   this.gameSpeedMs= LEVEL_TO_MS[event];
+   console.log("lvl speed change");
+   //reset intervals
+    if(this.isGameRunning) this.setNewInterval(this.gameSpeedMs);
+  }
+
+
+  /**
+   * Set new visible mole different from actual.
+   * */
+  getNewVisibleMole(moleIndex?: number): void{
+    if (moleIndex && !this.isVisibleMole(moleIndex)) return;
+    console.log("Getting new mole!");
+    this.visibleMole = this.getRandomMole(this.visibleMole);
+  }
+
+  isVisibleMole= (moleIndex: number): boolean=>  this.visibleMole === moleIndex;
 
   ngOnDestroy(): void {
-    console.log("destroying..., linter warning avoid.")
+    console.log("destroying..., linter warning avoid.");
+    if (this.intervalId) clearInterval(this.intervalId);
+  }
+
+  /**
+   * Gets new distinct random value
+   * @param oldRandom
+   * @private
+   */
+  private getRandomMole(oldRandom?: number): number{
+    const random=Math.floor(Math.random() * this.moles.length);
+    if ( oldRandom && oldRandom !== random) return random;
+    return this.getRandomMole(random);
+  }
+
+  private updatePoints(isMoleHit: boolean): void {
+    if (!isMoleHit) return; //do nothing
+    this.actualPoints= this.actualPoints + LEVEL_TO_PTS[this.actualLvl];
+    this.gameService.setPlayerScore(this.username, this.actualPoints);
+  }
+
+  private setNewInterval(gameSpeed: number) {
+    if (this.intervalId) clearInterval(this.intervalId);
+      console.log("Setting new interval")
+    this.intervalId= setInterval( ()=>{
+      this.getNewVisibleMole(this.visibleMole);
+    }, gameSpeed) as number;
+  }
+  private openSnackBar() {
+    this._snackBar.open("Good Job!", "", { duration: 3000});
   }
 }
