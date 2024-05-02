@@ -1,0 +1,73 @@
+@mixin border-box {
+  box-sizing: border-box;
+}
+@mixin padding-1 {
+  padding: 1em;
+}
+@mixin w-100 {
+  width: 100%;
+}
+:host{
+  @include w-100;
+  --board-width: 23rem;
+  --cell-width: 6rem;
+}
+.header{
+  @include w-100;
+  @include padding-1;
+  @include border-box;
+  background-color: #3f51b5;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .username_wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    //padding-left: 1em;
+    .username{
+      font-size: 24px;
+    }
+  }
+  .level-container{
+    //padding-right: 1em;
+  }
+}
+
+.game{
+  //margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  @include border-box;
+  @include padding-1;
+
+  .points{
+    @include w-100;
+    text-align: right;
+    font-size: 24px;
+  }
+  .game-board{
+    margin-top: 1rem;
+    width: var(--board-width);
+    height: var(--board-width);
+    flex-direction: row;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+    .board-cell{
+      width: var(--cell-width);
+      height: var(--cell-width);
+      height: var(--cell-width);
+      border: 0.1em blue solid;
+    }
+  }
+
+  .play-btn{
+    margin-top: 1rem;
+  }
+}
