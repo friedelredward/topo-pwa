@@ -1,14 +1,14 @@
 <div class="header">
   <div class="username_wrapper">
     <mat-icon>account_circle</mat-icon>
-    <span class="username">{{ username }}</span>
+    <span class="username">{{ username ? username: "" }}</span>
   </div>
-  <div class="level-container">
-    Level
-    <select matNativeControl required [ngModel]="gameSpeed">
-      <option selected [value]="level2ms[levelSpeed.LOW]">{{levelSpeed.LOW}}</option>
-      <option [value]="level2ms[levelSpeed.MEDIUM]">{{levelSpeed.MEDIUM}}</option>
-      <option [value]="level2ms[levelSpeed.HIGH]">{{levelSpeed.HIGH}}</option>
+  <div >
+    <span>Level</span>
+    <select class="custom-select" matNativeControl required [ngModel]="actualLvl" (ngModelChange)="onLvlSpeedChange($event)">
+      <option selected [value]="levelSpeed.LOW">{{levelSpeed.LOW}}</option>
+      <option [value]="levelSpeed.MEDIUM">{{levelSpeed.MEDIUM}}</option>
+      <option [value]="levelSpeed.HIGH">{{levelSpeed.HIGH}}</option>
     </select>
   </div>
 </div>
@@ -19,15 +19,14 @@
       <span>Points: {{ actualPoints }}</span>
     </div>
     <div class="game-board">
-      <div class="board-cell"></div>
-      <div class="board-cell"></div>
-      <div class="board-cell"></div>
-      <div class="board-cell"></div>
-      <div class="board-cell"></div>
-      <div class="board-cell"></div>
-      <div class="board-cell"></div>
-      <div class="board-cell"></div>
-      <div class="board-cell"></div>
+      @for (mole of moles; track mole; let  i = $index) {
+      <div class="board-cell">
+        <app-topo
+          [isVisible]="isVisibleMole(i)"
+          (isMoleHit)="onMoleHit($event, i)"
+        ></app-topo>
+      </div>
+      }
     </div>
     <div class="play-btn">
       <button *ngIf="!isGameRunning" color="primary" (click)="startGame()" mat-flat-button>Start</button>
