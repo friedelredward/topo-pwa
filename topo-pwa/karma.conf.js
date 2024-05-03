@@ -16,7 +16,7 @@ module.exports = function(config) {
       dir: require('path').join(__dirname, 'coverage'),
       subdir: '.',
       reporters: [
-        { type: 'lcovonly', subdir: '.', file: 'lcov.info' }
+        { type: 'lcov', subdir: '.', file: 'lcov.info' }
       ]
     },
     reporters: ['progress', 'coverage', 'kjhtml' ],
