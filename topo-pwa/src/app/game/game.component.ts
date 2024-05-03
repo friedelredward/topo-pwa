@@ -46,6 +46,7 @@ export const LEVEL_TO_PTS ={
 export class GameComponent implements OnInit, OnDestroy{
   readonly levelSpeed= LevelSpeed;
   readonly BOARD_CELLS= 9;
+  readonly NOTIFICATION_DURATION= 3000;
   username: string | null = '';
   isGameRunning= false;
   actualLvl= LevelSpeed.LOW;
@@ -81,9 +82,11 @@ export class GameComponent implements OnInit, OnDestroy{
   }
 
   onMoleHit(isMoleHit: boolean, moleIndex: number){
-    if (isMoleHit) this.openSnackBar();
+    if (isMoleHit){
+      this.openSnackBar();
+      this.getNewVisibleMole(moleIndex);
+    }
     this.updatePoints(isMoleHit);
-    this.getNewVisibleMole(moleIndex);
   }
 
   /**
@@ -103,9 +106,8 @@ export class GameComponent implements OnInit, OnDestroy{
    * Set new visible mole different from actual.
    * */
   getNewVisibleMole(moleIndex?: number): void{
-    if (moleIndex && !this.isVisibleMole(moleIndex)) return;
-    console.log("Getting new mole!");
-    this.visibleMole = this.getRandomMole(this.visibleMole);
+    const newMole= this.getRandomMole(moleIndex);
+    this.visibleMole = newMole;
   }
 
   isVisibleMole= (moleIndex: number): boolean=>  this.visibleMole === moleIndex;
@@ -122,7 +124,10 @@ export class GameComponent implements OnInit, OnDestroy{
    */
   private getRandomMole(oldRandom?: number): number{
     const random=Math.floor(Math.random() * this.moles.length);
-    if ( oldRandom && oldRandom !== random) return random;
+    if ( oldRandom !== random){
+      return random;
+    }
+    console.log("Getting new random mole because duplicate. OLD:", oldRandom);
     return this.getRandomMole(random);
   }
 
@@ -133,13 +138,14 @@ export class GameComponent implements OnInit, OnDestroy{
   }
 
   private setNewInterval(gameSpeed: number) {
+    console.log("Setting new interval", this.intervalId);
     if (this.intervalId) clearInterval(this.intervalId);
-      console.log("Setting new interval")
     this.intervalId= setInterval( ()=>{
+      console.log("Getting new mole IF timer expired or mole is hit")
       this.getNewVisibleMole(this.visibleMole);
     }, gameSpeed) as number;
   }
   private openSnackBar() {
-    this._snackBar.open("Good Job!", "", { duration: 3000});
+    this._snackBar.open("Good Job!", "", { duration: this.NOTIFICATION_DURATION});
   }
 }
