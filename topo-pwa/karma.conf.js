@@ -19,7 +19,7 @@ module.exports = function(config) {
         { type: 'lcovonly', subdir: '.', file: 'lcov.info' }
       ]
     },
-    reporters: ['progress', 'coverage'],
+    reporters: ['progress', 'coverage', 'kjhtml' ],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
