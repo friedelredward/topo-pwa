@@ -81,7 +81,7 @@ export class GameComponent implements OnInit, OnDestroy{
     this.setNewInterval(this.gameSpeedMs)
   }
 
-  onMoleHit(isMoleHit: boolean, moleIndex: number){
+  onMoleHit(isMoleHit: boolean){
     if (isMoleHit){
       this.openSnackBar();
       //just wait to new mole?
@@ -96,6 +96,7 @@ export class GameComponent implements OnInit, OnDestroy{
    */
   onLvlSpeedChange(event: LevelSpeed) {
    this.gameSpeedMs= LEVEL_TO_MS[event];
+   this.actualLvl= LevelSpeed[event];
    //reset intervals
     if(this.isGameRunning) this.setNewInterval(this.gameSpeedMs);
   }
@@ -138,7 +139,7 @@ export class GameComponent implements OnInit, OnDestroy{
     if (this.intervalId){
       clearInterval(this.intervalId);
     }
-    this.intervalId= setInterval( (interval:any)=>{
+    this.intervalId= setInterval( ()=>{
       this.getNewVisibleMole(this.visibleMole);
     }, gameSpeed, this.intervalId) as number;
   }
