@@ -84,6 +84,7 @@ export class GameComponent implements OnInit, OnDestroy{
   onMoleHit(isMoleHit: boolean){
     if (isMoleHit){
       this.openSnackBar();
+      navigator.vibrate(200);
       //just wait to new mole?
     }
     this.updatePoints(isMoleHit);
