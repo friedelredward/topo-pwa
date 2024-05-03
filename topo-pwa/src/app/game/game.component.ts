@@ -84,7 +84,7 @@ export class GameComponent implements OnInit, OnDestroy{
   onMoleHit(isMoleHit: boolean, moleIndex: number){
     if (isMoleHit){
       this.openSnackBar();
-      this.getNewVisibleMole(moleIndex);
+      //just wait to new mole?
     }
     this.updatePoints(isMoleHit);
   }
@@ -96,7 +96,6 @@ export class GameComponent implements OnInit, OnDestroy{
    */
   onLvlSpeedChange(event: LevelSpeed) {
    this.gameSpeedMs= LEVEL_TO_MS[event];
-   console.log("lvl speed change");
    //reset intervals
     if(this.isGameRunning) this.setNewInterval(this.gameSpeedMs);
   }
@@ -113,7 +112,6 @@ export class GameComponent implements OnInit, OnDestroy{
   isVisibleMole= (moleIndex: number): boolean=>  this.visibleMole === moleIndex;
 
   ngOnDestroy(): void {
-    console.log("destroying..., linter warning avoid.");
     if (this.intervalId) clearInterval(this.intervalId);
   }
 
@@ -127,7 +125,6 @@ export class GameComponent implements OnInit, OnDestroy{
     if ( oldRandom !== random){
       return random;
     }
-    console.log("Getting new random mole because duplicate. OLD:", oldRandom);
     return this.getRandomMole(random);
   }
 
@@ -138,12 +135,12 @@ export class GameComponent implements OnInit, OnDestroy{
   }
 
   private setNewInterval(gameSpeed: number) {
-    console.log("Setting new interval", this.intervalId);
-    if (this.intervalId) clearInterval(this.intervalId);
-    this.intervalId= setInterval( ()=>{
-      console.log("Getting new mole IF timer expired or mole is hit")
+    if (this.intervalId){
+      clearInterval(this.intervalId);
+    }
+    this.intervalId= setInterval( (interval:any)=>{
       this.getNewVisibleMole(this.visibleMole);
-    }, gameSpeed) as number;
+    }, gameSpeed, this.intervalId) as number;
   }
   private openSnackBar() {
     this._snackBar.open("Good Job!", "", { duration: this.NOTIFICATION_DURATION});
