@@ -1,6 +1,6 @@
 # TopoPwa
-###Build status: [![Netlify Status](https://api.netlify.com/api/v1/badges/93cf819b-7466-403b-8dfa-433957ecbe4f/deploy-status)](https://app.netlify.com/sites/whack-a-mole-pwa/deploys)
-
+### Build status: [![Netlify Status](https://api.netlify.com/api/v1/badges/93cf819b-7466-403b-8dfa-433957ecbe4f/deploy-status)](https://app.netlify.com/sites/whack-a-mole-pwa/deploys)
+### Test-coverage :[![codecov](https://codecov.io/gh/friedelredward/topo-pwa/graph/badge.svg?token=8HED6IIJ4O)](https://codecov.io/gh/friedelredward/topo-pwa)
 
 
 This project is using Angular version 17.3.6 which means u need at least node 18 installed.
