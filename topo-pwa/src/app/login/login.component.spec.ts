@@ -5,6 +5,11 @@ import {BrowserDynamicTestingModule} from "@angular/platform-browser-dynamic/tes
 import {provideRouter} from "@angular/router";
 import {routes} from "../app.routes";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {MatIconModule} from "@angular/material/icon";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
+import {FormsModule} from "@angular/forms";
+import {MatButtonModule} from "@angular/material/button";
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -14,7 +19,12 @@ describe('LoginComponent', () => {
     await TestBed.configureTestingModule({
       imports: [LoginComponent,
         BrowserDynamicTestingModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        FormsModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatIconModule
       ],
       providers: [provideRouter(routes)]
     })
@@ -27,5 +37,14 @@ describe('LoginComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should bind username to input field', () => {
+    const inputElement: HTMLInputElement = fixture.nativeElement.querySelector('input');
+    const testUsername = 'testUser';
+    inputElement.value = testUsername;
+    inputElement.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+    expect(component.username).toEqual(testUsername);
   });
 });

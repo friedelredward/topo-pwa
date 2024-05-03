@@ -9,22 +9,8 @@ import {FormsModule} from "@angular/forms";
 import {TopoComponent} from "../topo/topo.component";
 import {GameService} from "../shared/services/game.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {LEVEL_TO_MS, LEVEL_TO_PTS, LevelSpeed} from "../shared/model/LevelSpeed";
 
-export enum LevelSpeed{
-  LOW= "LOW",
-  MEDIUM= "MEDIUM",
-  HIGH= "HIGH"
-}
-export const LEVEL_TO_MS ={
-  LOW: 2000,
-  MEDIUM: 750,
-  HIGH: 500
-}
-export const LEVEL_TO_PTS ={
-  LOW: 10,
-  MEDIUM: 20,
-  HIGH: 30
-}
 @Component({
   selector: 'app-game',
   standalone: true,
@@ -37,7 +23,6 @@ export const LEVEL_TO_PTS ={
     MatOption,
     MatButtonModule,
     MatFormFieldModule,
-
     TopoComponent
   ],
   templateUrl: './game.component.html',
@@ -104,7 +89,7 @@ export class GameComponent implements OnInit, OnDestroy{
 
 
   /**
-   * Set new visible mole different from actual.
+   * Set new visible mole different from actual (without re-render).
    * */
   getNewVisibleMole(moleIndex?: number): void{
     const newMole= this.getRandomMole(moleIndex);
@@ -145,6 +130,6 @@ export class GameComponent implements OnInit, OnDestroy{
     }, gameSpeed, this.intervalId) as number;
   }
   private openSnackBar() {
-    this._snackBar.open("Good Job!", "", { duration: this.NOTIFICATION_DURATION});
+    this._snackBar.open(`Good Job ${this.username}!`, "", { duration: this.NOTIFICATION_DURATION});
   }
 }
