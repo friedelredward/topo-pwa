@@ -46,6 +46,7 @@ export const LEVEL_TO_PTS ={
 export class GameComponent implements OnInit, OnDestroy{
   readonly levelSpeed= LevelSpeed;
   readonly BOARD_CELLS= 9;
+  readonly NOTIFICATION_DURATION= 3000;
   username: string | null = '';
   isGameRunning= false;
   actualLvl= LevelSpeed.LOW;
@@ -81,9 +82,11 @@ export class GameComponent implements OnInit, OnDestroy{
   }
 
   onMoleHit(isMoleHit: boolean, moleIndex: number){
-    if (isMoleHit) this.openSnackBar();
+    if (isMoleHit){
+      this.openSnackBar();
+      //just wait to new mole?
+    }
     this.updatePoints(isMoleHit);
-    this.getNewVisibleMole(moleIndex);
   }
 
   /**
@@ -93,7 +96,6 @@ export class GameComponent implements OnInit, OnDestroy{
    */
   onLvlSpeedChange(event: LevelSpeed) {
    this.gameSpeedMs= LEVEL_TO_MS[event];
-   console.log("lvl speed change");
    //reset intervals
     if(this.isGameRunning) this.setNewInterval(this.gameSpeedMs);
   }
@@ -103,15 +105,13 @@ export class GameComponent implements OnInit, OnDestroy{
    * Set new visible mole different from actual.
    * */
   getNewVisibleMole(moleIndex?: number): void{
-    if (moleIndex && !this.isVisibleMole(moleIndex)) return;
-    console.log("Getting new mole!");
-    this.visibleMole = this.getRandomMole(this.visibleMole);
+    const newMole= this.getRandomMole(moleIndex);
+    this.visibleMole = newMole;
   }
 
   isVisibleMole= (moleIndex: number): boolean=>  this.visibleMole === moleIndex;
 
   ngOnDestroy(): void {
-    console.log("destroying..., linter warning avoid.");
     if (this.intervalId) clearInterval(this.intervalId);
   }
 
@@ -122,7 +122,9 @@ export class GameComponent implements OnInit, OnDestroy{
    */
   private getRandomMole(oldRandom?: number): number{
     const random=Math.floor(Math.random() * this.moles.length);
-    if ( oldRandom && oldRandom !== random) return random;
+    if ( oldRandom !== random){
+      return random;
+    }
     return this.getRandomMole(random);
   }
 
@@ -133,13 +135,14 @@ export class GameComponent implements OnInit, OnDestroy{
   }
 
   private setNewInterval(gameSpeed: number) {
-    if (this.intervalId) clearInterval(this.intervalId);
-      console.log("Setting new interval")
-    this.intervalId= setInterval( ()=>{
+    if (this.intervalId){
+      clearInterval(this.intervalId);
+    }
+    this.intervalId= setInterval( (interval:any)=>{
       this.getNewVisibleMole(this.visibleMole);
-    }, gameSpeed) as number;
+    }, gameSpeed, this.intervalId) as number;
   }
   private openSnackBar() {
-    this._snackBar.open("Good Job!", "", { duration: 3000});
+    this._snackBar.open("Good Job!", "", { duration: this.NOTIFICATION_DURATION});
   }
 }
