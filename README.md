@@ -14,41 +14,44 @@ with the following requirements:
 > La vista “game” mostrará el nombre del jugador, los puntos que tiene, la selección de nivel de dificultad “bajo” “medio” “alto” y un botón para comenzar el juego.
 > Cada vez que se haga click en el botón Play, se mostraran 9 cuadros donde aparecen de manera aleatoria un topo. Si el usuario consigue “matarlo” se actualizaran los puntos según el nivel de dificultad que tenga seleccionado
 El nivel de dificultad influye en la velocidad del cambio de posición aleatoria de los topos .
-
-Nivel de dificultad	Tiempo ms	Puntos
-Bajo	1000ms	10
-Medio	750ms	20
-Alto	500ms	30
+Nivel de dificultad	| Tiempo ms	| Puntos
+> Bajo	1000ms	10
+> Medio	750ms	20
+> Alto	500ms	30
 Ejemplo
 Ejemplo de ejecución
 La aplicación deberá funcionar offline, es decir, si en nuestro dispositivo activamos el modo avión y volvemos a la app tras haberla abierto al menos una vez, se podrá acceder a la misma sin problemas.
-
 La aplicación deberá estar desplegada y disponible públicamente.
-
 ¡RECUERDA! Los ejemplos visuales mostrados son únicamente orientativos y no deben sesgar tu creatividad.
 
 Requisitos:
-- [ ] La aplicación deberá contener funcionalmente, como mínimo, las instrucciones detalladas en el enunciado.
-- [ ] El código debe ser público
-- [ ] Se deberán realizar tests unitarios de las vistas y de los componentes de la aplicación.
-- [ ] Se podrá utilizar cualquier infraestructura de alojamiento pública como, por ejemplo, Vercel, Netlify o Github Pages.
-- [ ] Se debe subir un fichero README.md al repositorio con las instrucciones para hacer funcionar la aplicación en local. Puedes añadir cualquier otro dato que consideres necesario.
-- [ ] Se puede utilizar cualquier herramienta, librería o framework, dentro del ecosistema de JavaScript.
+- [x] La aplicación deberá contener funcionalmente, como mínimo, las instrucciones detalladas en el enunciado.
+- [x] El código debe ser público
+- [x] Se deberán realizar tests unitarios de las vistas y de los componentes de la aplicación.
+- [x] Se podrá utilizar cualquier infraestructura de alojamiento pública como, por ejemplo, Vercel, Netlify o Github Pages.
+- [x] Se debe subir un fichero README.md al repositorio con las instrucciones para hacer funcionar la aplicación en local. Puedes añadir cualquier otro dato que consideres necesario.
+- [x] Se puede utilizar cualquier herramienta, librería o framework, dentro del ecosistema de JavaScript.
 
 Si crees que lo anterior no es suficiente y quieres demostrarnos todo lo que sabes, se valorarán muy positivamente otros puntos como:
 
-- [ ] La calidad, claridad y limpieza del código.
-- [ ] El uso de componentes reutilizables.
-- [ ] La realización de otro tipo de tests.
-- [ ] Herramientas de análisis estático y formateo de código que mejoren la experiencia del desarrollador.
-- [ ] Mejoras en el flujo y la metodología de desarrollo, construcción y despliegue.
-- [ ] Otras características que consideres importantes para una aplicación web progresiva.
-- [ ] Envíanos un enlace al repositorio en el que se encuentre el código de la aplicación y un enlace con la aplicación desplegada.
+- [x] La calidad, claridad y limpieza del código.
+- [x] El uso de componentes reutilizables.
+- [X] La realización de otro tipo de tests.
+- [x] Herramientas de análisis estático y formateo de código que mejoren la experiencia del desarrollador.
+- [x] Mejoras en el flujo y la metodología de desarrollo, construcción y despliegue.
+- [x] Otras características que consideres importantes para una aplicación web progresiva.
+- [x] Envíanos un enlace al repositorio en el que se encuentre el código de la aplicación y un enlace con la aplicación desplegada.
 
-https://bbvaengineering.github.io/challenges/assets/images/kill.gif
+![Whack a mole](https://bbvaengineering.github.io/challenges/assets/images/kill.gif)
 
 Bonus points
-Si crees que te ha sabido a poco el ejercicio, por aquí te dejamos algunas ideas para mejorarlo, aunque puedes inspirarte en otras aplicaciones similares. ¡Valoraremos muy positivamente cualquier característica adicional! Y… ¡no te olvides de documentar las nuevas funcionalidades!
 
-- [ ] Mostrar varios topos a la vez.
-- [ ] Incluir vibración en el dispositivo cada vez que el usuario mate un topo.
+- [x] Mostrar varios topos a la vez.
+- [x] Incluir vibración en el dispositivo cada vez que el usuario mate un topo.
+
+### future enhancements:
+- Cambiar level por speed y añadir la posibilidad de eligir topos a la vista
+- Entender dificultad como velocidad de refresco del topo y cantidad del mismo y tener mas niveles (3velocidades x 1 topo + 3 velocidades x 2 o n topos...)
+- Posibilidad de elegir celdas y tamaño de tablero
+- Tener un timeout  general del juego (Game over)
+- Mostrar una notificacion con ("Install app")
