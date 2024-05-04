@@ -33,17 +33,17 @@ export class GameComponent implements OnInit, OnDestroy{
   readonly BOARD_CELLS= 9;
   readonly NOTIFICATION_DURATION= 3000;
   username: string | null = '';
-  isGameRunning= false;
-  actualLvl= LevelSpeed.LOW;
+  isGameRunning: boolean= false;
+  actualLvl: LevelSpeed= LevelSpeed.LOW;
   gameSpeedMs: number= LEVEL_TO_MS[this.actualLvl];
   actualPoints: number= 0;
-  moles= new Array(this.BOARD_CELLS).fill(0).map((x,i)=> i);
-  visibleMole: number| undefined;
+  moles: number[] = new Array(this.BOARD_CELLS).fill(0).map((x,i)=> i);
+  visibleMoles: number[] = [];
   private intervalId: number | null= null;
 
   constructor(private route: ActivatedRoute,
-    private _snackBar: MatSnackBar,
-    private gameService: GameService
+              private _snackBar: MatSnackBar,
+              private gameService: GameService
   ) {  }
 
   ngOnInit(): void {
@@ -57,62 +57,56 @@ export class GameComponent implements OnInit, OnDestroy{
   stopGame(): void {
     this.isGameRunning= false;
     if (this.intervalId) clearInterval(this.intervalId);
-    this.visibleMole= undefined;
+    this.visibleMoles = [];
   }
 
   startGame(): void {
     this.isGameRunning=true;
-    this.getNewVisibleMole(this.visibleMole);
-    this.setNewInterval(this.gameSpeedMs)
+    this.getNewVisibleMoles(this.visibleMoles);
+    this.setNewInterval(this.gameSpeedMs);
+    //this.startTimer();
   }
 
-  onMoleHit(isMoleHit: boolean){
+  onMoleHit(isMoleHit: boolean, moleIndex: number){
     if (isMoleHit){
       this.openSnackBar();
       navigator.vibrate(200);
-      //just wait to new mole?
+      this.visibleMoles = this.visibleMoles.filter(mole => mole !== moleIndex);
     }
     this.updatePoints(isMoleHit);
   }
 
-  /**
-   * On level change handler.
-   * Also updates game speed.
-   * @param event
-   */
   onLvlSpeedChange(event: LevelSpeed) {
-   this.gameSpeedMs= LEVEL_TO_MS[event];
-   this.actualLvl= LevelSpeed[event];
-   //reset intervals
+    this.gameSpeedMs= LEVEL_TO_MS[event];
+    this.actualLvl= LevelSpeed[event];
     if(this.isGameRunning) this.setNewInterval(this.gameSpeedMs);
   }
 
-
-  /**
-   * Set new visible mole different from actual (without re-render).
-   * */
-  getNewVisibleMole(moleIndex?: number): void{
-    const newMole= this.getRandomMole(moleIndex);
-    this.visibleMole = newMole;
+  getNewVisibleMoles(moleIndices?: number[]): void{
+    this.visibleMoles = this.getRandomMoles(moleIndices);
   }
 
-  isVisibleMole= (moleIndex: number): boolean=>  this.visibleMole === moleIndex;
+  isVisibleMole= (moleIndex: number): boolean =>  this.visibleMoles.includes(moleIndex);
 
   ngOnDestroy(): void {
     if (this.intervalId) clearInterval(this.intervalId);
   }
 
-  /**
-   * Gets new distinct random value
-   * @param oldRandom
-   * @private
-   */
-  private getRandomMole(oldRandom?: number): number{
-    const random=Math.floor(Math.random() * this.moles.length);
-    if ( oldRandom !== random){
-      return random;
+  private getRandomMoles(oldRandoms?: number[]): number[] {
+    const randoms: number[] = [];
+    let allMoles = [...this.moles];
+    // Remove oldRandoms from allMoles
+    if (oldRandoms) {
+      allMoles = allMoles.filter(mole => !oldRandoms.includes(mole));
     }
-    return this.getRandomMole(random);
+
+    while (randoms.length < 2) {
+      const randomIndex = Math.floor(Math.random() * allMoles.length);
+      randoms.push(allMoles[randomIndex]);
+      allMoles.splice(randomIndex, 1); // Remove the selected mole from allMoles
+    }
+
+    return randoms;
   }
 
   private updatePoints(isMoleHit: boolean): void {
@@ -126,9 +120,10 @@ export class GameComponent implements OnInit, OnDestroy{
       clearInterval(this.intervalId);
     }
     this.intervalId= setInterval( ()=>{
-      this.getNewVisibleMole(this.visibleMole);
+      this.getNewVisibleMoles(this.visibleMoles);
     }, gameSpeed, this.intervalId) as number;
   }
+
   private openSnackBar() {
     this._snackBar.open(`Good Job ${this.username}!`, "", { duration: this.NOTIFICATION_DURATION});
   }
