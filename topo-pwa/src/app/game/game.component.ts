@@ -40,6 +40,11 @@ export class GameComponent implements OnInit, OnDestroy{
   moles: number[] = new Array(this.BOARD_CELLS).fill(0).map((x,i)=> i);
   visibleMoles: number[] = [];
   private intervalId: number | null= null;
+  /**
+   * Number of moles to show (1|2)
+   */
+  molesCount: number= 2;
+  hitAudio: HTMLAudioElement= new Audio('assets/sounds/hit.wav');
 
   constructor(private route: ActivatedRoute,
               private _snackBar: MatSnackBar,
@@ -52,6 +57,8 @@ export class GameComponent implements OnInit, OnDestroy{
     //set actualpoints for username
     const playerScore= this.gameService.getPlayerScore(this.username);
     this.actualPoints= playerScore && playerScore !== this.actualPoints ? playerScore: this.actualPoints;
+    //load audio asset
+    this.hitAudio.load();
   }
 
   stopGame(): void {
@@ -64,16 +71,20 @@ export class GameComponent implements OnInit, OnDestroy{
     this.isGameRunning=true;
     this.getNewVisibleMoles(this.visibleMoles);
     this.setNewInterval(this.gameSpeedMs);
-    //this.startTimer();
   }
 
   onMoleHit(isMoleHit: boolean, moleIndex: number){
     if (isMoleHit){
       this.openSnackBar();
       navigator.vibrate(200);
+      this.hitAudio.play();
       this.visibleMoles = this.visibleMoles.filter(mole => mole !== moleIndex);
     }
     this.updatePoints(isMoleHit);
+  }
+
+  onMolesCountChange($event: number) {
+    this.molesCount= $event;
   }
 
   onLvlSpeedChange(event: LevelSpeed) {
@@ -100,10 +111,11 @@ export class GameComponent implements OnInit, OnDestroy{
       allMoles = allMoles.filter(mole => !oldRandoms.includes(mole));
     }
 
-    while (randoms.length < 2) {
+    while (randoms.length < this.molesCount) {
       const randomIndex = Math.floor(Math.random() * allMoles.length);
       randoms.push(allMoles[randomIndex]);
-      allMoles.splice(randomIndex, 1); // Remove the selected mole from allMoles
+      // Remove the selected mole from allMoles
+      allMoles.splice(randomIndex, 1);
     }
 
     return randoms;

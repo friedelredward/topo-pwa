@@ -40,7 +40,7 @@
     border-left: none;
     border-right: none;
     border-bottom: 1px solid blue;
-    color: white;
+    color: #ffffff;
     margin-left: 1rem;
   }
 }
@@ -70,7 +70,8 @@
     .board-cell{
       width: var(--cell-width);
       height: var(--cell-width);
-      border: 0.1em solid #333;
+      border: 0.1em solid #ffffff;
+      border-radius: 0.2em;
     }
   }
 

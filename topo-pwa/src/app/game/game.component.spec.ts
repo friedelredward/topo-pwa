@@ -7,6 +7,7 @@ import {LEVEL_TO_MS, LEVEL_TO_PTS, LevelSpeed} from "../shared/model/LevelSpeed"
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {FormsModule} from "@angular/forms";
 import {NoopAnimationsModule} from "@angular/platform-browser/animations";
+import createSpyObj = jasmine.createSpyObj;
 
 describe('GameComponent', () => {
   let component: GameComponent;
@@ -26,6 +27,7 @@ describe('GameComponent', () => {
 
     fixture = TestBed.createComponent(GameComponent);
     component = fixture.componentInstance;
+    component.hitAudio= createSpyObj('HTMLAudioElement', ['play', "load"]);
     fixture.detectChanges();
   });
 
@@ -112,6 +114,12 @@ describe('GameComponent', () => {
     component.onLvlSpeedChange(newLevel);
     expect(component.gameSpeedMs).toEqual(LEVEL_TO_MS[newLevel]);
     expect(component.actualLvl).toEqual(newLevel);
+  });
+
+  it('should update molesCount when onMolesCountChange is called', () => {
+    const newMolesCount = 3;
+    component.onMolesCountChange(newMolesCount);
+    expect(component.molesCount).toEqual(newMolesCount);
   });
 
   it('should open snackbar when mole is hit', () => {

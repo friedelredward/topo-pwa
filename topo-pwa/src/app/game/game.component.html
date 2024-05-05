@@ -4,6 +4,13 @@
     <span class="username">{{ username ? username: "" }}</span>
   </div>
   <div >
+    <span>Moles:</span>
+    <select class="custom-select" matNativeControl required [ngModel]="molesCount" (ngModelChange)="onMolesCountChange($event)">
+      <option selected [value]="1">{{"1 mole"}}</option>
+      <option [value]="2">{{"2 moles"}}</option>
+    </select>
+  </div>
+  <div >
     <span>Level</span>
     <select class="custom-select" matNativeControl required [ngModel]="actualLvl" (ngModelChange)="onLvlSpeedChange($event)">
       <option selected [value]="levelSpeed.LOW">{{levelSpeed.LOW}}</option>

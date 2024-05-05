@@ -15,6 +15,10 @@ import {CustomIconsService} from "./shared/services/custom-icons.service";
       align-content: center;
       justify-content: center;
       align-items: center;
+      background-image: url("/assets/img/green-bg2.jpg");
+      background-repeat: no-repeat;
+      background-size: cover;
+      color: white;
     }
   `]
 })
