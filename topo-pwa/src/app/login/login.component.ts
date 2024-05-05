@@ -5,7 +5,6 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {FormsModule} from "@angular/forms";
 import {MatIconModule} from "@angular/material/icon";
-import {MOUSE_ICON} from "../shared/model/icons";
 
 
 @Component({
@@ -22,7 +21,5 @@ import {MOUSE_ICON} from "../shared/model/icons";
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  readonly mouseIcon= MOUSE_ICON.label;
   username: string= '';
-
 }
