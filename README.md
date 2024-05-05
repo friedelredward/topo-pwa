@@ -1,6 +1,8 @@
-Topo PWA
+# Topo PWA
+[![Netlify Status](https://api.netlify.com/api/v1/badges/93cf819b-7466-403b-8dfa-433957ecbe4f/deploy-status)](https://app.netlify.com/sites/whack-a-mole-pwa/deploys)
+
 > [project README here](https://github.com/friedelredward/topo-pwa/blob/master/topo-pwa/README.md)
-> Live Deploy:  [![Netlify Status](https://api.netlify.com/api/v1/badges/93cf819b-7466-403b-8dfa-433957ecbe4f/deploy-status)](https://app.netlify.com/sites/whack-a-mole-pwa/deploys)
+> Live Deploy: https://whack-a-mole-pwa.netlify.app
 
 This project answers the technical test located here : https://bbvaengineering.github.io/challenges/kill/
 with the following requirements:
@@ -48,9 +50,11 @@ Bonus points
 
 - [x] Mostrar varios topos a la vez.
 - [x] Incluir vibración en el dispositivo cada vez que el usuario mate un topo.
+- [x] añadir la posibilidad de eligir topos a la vista
+- [x] Añadir efecto de sonido antes de sumar puntuacion
 
 ### future enhancements:
-- Cambiar level por speed y añadir la posibilidad de eligir topos a la vista
+- Cambiar level por speed.
 - Entender dificultad como velocidad de refresco del topo y cantidad del mismo y tener mas niveles (3velocidades x 1 topo + 3 velocidades x 2 o n topos...)
 - Posibilidad de elegir celdas y tamaño de tablero
 - Tener un timeout  general del juego (Game over)
