@@ -13,8 +13,9 @@ This project is using Angular version 17.3.6 which means you need at least node 
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Could be seen locally with `http-server` launched in `dist/topo-pwa/browser`.
 
 ## Running unit tests
-
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `ng test --code-coverage` to execute the unit tests and generate a coverage report.
 
