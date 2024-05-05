@@ -10,17 +10,20 @@
 @mixin bg-color{
   background-color: #3f51b5;
 }
+@mixin color-white{
+  color: #ffffff;
+}
 :host{
   @include w-100;
   --board-width: 23rem;
   --cell-width: 6rem;
+   @include color-white;
 }
 .header{
   @include w-100;
   @include padding-1;
   @include border-box;
   @include bg-color;
-  color: #fff;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -32,15 +35,23 @@
     .username{
       font-size: 24px;
       margin-left: 1rem;
+      overflow: hidden;
+      width: 6rem;
+      display: inline-block;
+      text-overflow: ellipsis;//for very long username
     }
+  }
+
+  .ml-auto{
+    margin-left: auto;
   }
   .custom-select{
     @include bg-color;
+    @include color-white;
     border-top: none;
     border-left: none;
     border-right: none;
     border-bottom: 1px solid blue;
-    color: #ffffff;
     margin-left: 1rem;
   }
 }
