@@ -114,6 +114,12 @@ describe('GameComponent', () => {
     expect(component.actualLvl).toEqual(newLevel);
   });
 
+  it('should update molesCount when onMolesCountChange is called', () => {
+    const newMolesCount = 3;
+    component.onMolesCountChange(newMolesCount);
+    expect(component.molesCount).toEqual(newMolesCount);
+  });
+
   it('should open snackbar when mole is hit', () => {
     component.username = "test";
     spyOn(component['_snackBar'], 'open');

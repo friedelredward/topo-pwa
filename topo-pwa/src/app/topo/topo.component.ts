@@ -6,7 +6,7 @@ import {NgClass, NgIf} from "@angular/common";
   standalone: true,
   imports: [NgIf, NgClass],
   template: `
-    <img class="mole" tabindex="0" loading="lazy" src="assets/img/mole.jpg" alt="Mole image"
+    <img class="mole" tabindex="0" loading="lazy" src="assets/img/mole.png" alt="Mole image"
          [ngClass]=" isVisible ? 'visible' : 'not-visible'"
          (click)="onMoleHit()"
          (keyup)="doNothing()"
@@ -19,9 +19,11 @@ import {NgClass, NgIf} from "@angular/common";
     }
     .not-visible{
       opacity: 0;
+      transition: opacity 0.2s ease-out;
     }
     .visible{
       opacity: 1;
+      transition: opacity 0.2s ease-in;
     }
   `]
 })
