@@ -7,6 +7,7 @@ import {LEVEL_TO_MS, LEVEL_TO_PTS, LevelSpeed} from "../shared/model/LevelSpeed"
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {FormsModule} from "@angular/forms";
 import {NoopAnimationsModule} from "@angular/platform-browser/animations";
+import createSpyObj = jasmine.createSpyObj;
 
 describe('GameComponent', () => {
   let component: GameComponent;
@@ -26,6 +27,7 @@ describe('GameComponent', () => {
 
     fixture = TestBed.createComponent(GameComponent);
     component = fixture.componentInstance;
+    component.hitAudio= createSpyObj('HTMLAudioElement', ['play', "load"]);
     fixture.detectChanges();
   });
 
