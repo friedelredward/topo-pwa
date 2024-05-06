@@ -1,13 +1,14 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {GameComponent} from './game.component';
-import {provideRouter} from "@angular/router";
-import {routes} from "../app.routes";
-import {LEVEL_TO_MS, LEVEL_TO_PTS, LevelSpeed} from "../shared/model/LevelSpeed";
-import {MatSnackBarModule} from "@angular/material/snack-bar";
-import {FormsModule} from "@angular/forms";
-import {NoopAnimationsModule} from "@angular/platform-browser/animations";
+import {provideRouter} from '@angular/router';
+import {routes} from '../../app.routes';
+import {LEVEL_TO_MS, LEVEL_TO_PTS, LevelSpeed} from '../../shared/model/LevelSpeed';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {FormsModule} from '@angular/forms';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import createSpyObj = jasmine.createSpyObj;
+import {BOARD_CELLS, NOTIFICATION_DURATION} from '../../shared/model/GameConfig';
 
 describe('GameComponent', () => {
   let component: GameComponent;
@@ -27,7 +28,7 @@ describe('GameComponent', () => {
 
     fixture = TestBed.createComponent(GameComponent);
     component = fixture.componentInstance;
-    component.hitAudio= createSpyObj('HTMLAudioElement', ['play', "load"]);
+    component.hitAudio= createSpyObj('HTMLAudioElement', ['play', 'load']);
     fixture.detectChanges();
   });
 
@@ -41,7 +42,7 @@ describe('GameComponent', () => {
     expect(component.actualLvl).toEqual(LevelSpeed.LOW);
     expect(component.gameSpeedMs).toEqual(LEVEL_TO_MS[LevelSpeed.LOW]);
     expect(component.actualPoints).toEqual(0);
-    expect(component.moles.length).toEqual(component.BOARD_CELLS);
+    expect(component.moles.length).toEqual(BOARD_CELLS);
     expect(component.visibleMoles).toHaveSize(0);
     expect(component['intervalId']).toBeNull();
   });
@@ -80,11 +81,11 @@ describe('GameComponent', () => {
     component.stopGame();
     expect(component.isGameRunning).toBeFalse();
     expect(component.visibleMoles).toHaveSize(0);
-    expect(window.clearInterval).toHaveBeenCalledOnceWith(component["intervalId"]);
+    expect(window.clearInterval).toHaveBeenCalledOnceWith(component['intervalId']);
   });
 
   it('should update points and show snackbar on mole hit', () => {
-    component.username = "test";
+    component.username = 'test';
     spyOn<any>(component, 'openSnackBar' );
     const initialPoints = component.actualPoints;
     component.onMoleHit(true, 1);
@@ -123,14 +124,14 @@ describe('GameComponent', () => {
   });
 
   it('should open snackbar when mole is hit', () => {
-    component.username = "test";
+    component.username = 'test';
     spyOn(component['_snackBar'], 'open');
 
     component.onMoleHit(true, 1);
     expect(component['_snackBar'].open).toHaveBeenCalledWith(
       `Good Job ${component.username}!`,
-      "",
-      { duration: component.NOTIFICATION_DURATION}
+      '',
+      { duration: NOTIFICATION_DURATION}
     );
   });
 
