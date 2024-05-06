@@ -1,7 +1,7 @@
 export enum LevelSpeed{
-  LOW= "LOW",
-  MEDIUM= "MEDIUM",
-  HIGH= "HIGH"
+  LOW= 'LOW',
+  MEDIUM= 'MEDIUM',
+  HIGH= 'HIGH'
 }
 export const LEVEL_TO_MS ={
   LOW: 1000,

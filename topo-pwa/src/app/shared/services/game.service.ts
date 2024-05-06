@@ -5,21 +5,22 @@ import {Injectable} from '@angular/core';
 })
 export class GameService {
 
-  constructor() { }
-
-  getPlayerScore(player: string | null): number{
-    return player ? Number(localStorage.getItem(player)): 0;
+  constructor() {
   }
 
-  setPlayerScore(player: string | null, score: number): void{
-    if(player) localStorage.setItem(player, score.toString());
+  getPlayerScore(player: string | null): number {
+    return player ? Number(localStorage.getItem(player)) : 0;
   }
 
-  deletePlayerScore(player: string): void{
+  setPlayerScore(player: string | null, score: number): void {
+    if (player) localStorage.setItem(player, score.toString());
+  }
+
+  deletePlayerScore(player: string): void {
     localStorage.removeItem(player);
   }
 
   clearScores(): void {
-    localStorage.clear()
+    localStorage.clear();
   }
 }

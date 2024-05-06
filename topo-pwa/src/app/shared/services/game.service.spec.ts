@@ -1,7 +1,7 @@
 import {TestBed} from '@angular/core/testing';
 
 import {GameService} from './game.service';
-import {BrowserDynamicTestingModule} from "@angular/platform-browser-dynamic/testing";
+import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 
 describe('GameService', () => {
   let service: GameService;

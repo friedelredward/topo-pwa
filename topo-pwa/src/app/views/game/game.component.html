@@ -1,7 +1,7 @@
-<div class="header">
+<header class="header">
   <div class="username_wrapper">
     <mat-icon>account_circle</mat-icon>
-    <span class="username" [title]="username">{{ username ? username: "" }}</span>
+    <span class="username" [title]="username">{{ username || "" }}</span>
   </div>
   <div class="ml-auto">
     <span>Moles:</span>
@@ -18,7 +18,7 @@
       <option [value]="levelSpeed.HIGH">{{levelSpeed.HIGH}}</option>
     </select>
   </div>
-</div>
+</header>
 <main>
 <div class="points"></div>
   <div class="game">

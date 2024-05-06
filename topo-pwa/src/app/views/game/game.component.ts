@@ -1,15 +1,15 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, RouterModule} from "@angular/router";
-import {MatIconModule} from "@angular/material/icon";
-import {CommonModule} from "@angular/common";
-import {MatOption, MatSelect} from "@angular/material/select";
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatButtonModule} from "@angular/material/button";
-import {FormsModule} from "@angular/forms";
-import {TopoComponent} from "../topo/topo.component";
-import {GameService} from "../shared/services/game.service";
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {LEVEL_TO_MS, LEVEL_TO_PTS, LevelSpeed} from "../shared/model/LevelSpeed";
+import {ActivatedRoute, RouterModule} from '@angular/router';
+import {MatIconModule} from '@angular/material/icon';
+import {CommonModule} from '@angular/common';
+import {MatOption, MatSelect} from '@angular/material/select';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatButtonModule} from '@angular/material/button';
+import {FormsModule} from '@angular/forms';
+import {TopoComponent} from '../../components/topo/topo.component';
+import {GameService} from '../../shared/services/game.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {LEVEL_TO_MS, LEVEL_TO_PTS, LevelSpeed} from '../../shared/model/LevelSpeed';
 
 @Component({
   selector: 'app-game',
@@ -137,6 +137,6 @@ export class GameComponent implements OnInit, OnDestroy{
   }
 
   private openSnackBar() {
-    this._snackBar.open(`Good Job ${this.username}!`, "", { duration: this.NOTIFICATION_DURATION});
+    this._snackBar.open(`Good Job ${this.username}!`, '', { duration: this.NOTIFICATION_DURATION});
   }
 }

@@ -19,7 +19,7 @@
   --cell-width: 6rem;
    @include color-white;
 }
-.header{
+header{
   @include w-100;
   @include padding-1;
   @include border-box;
