@@ -8,6 +8,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {FormsModule} from '@angular/forms';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import createSpyObj = jasmine.createSpyObj;
+import {BOARD_CELLS, NOTIFICATION_DURATION} from '../../shared/model/GameConfig';
 
 describe('GameComponent', () => {
   let component: GameComponent;
@@ -41,7 +42,7 @@ describe('GameComponent', () => {
     expect(component.actualLvl).toEqual(LevelSpeed.LOW);
     expect(component.gameSpeedMs).toEqual(LEVEL_TO_MS[LevelSpeed.LOW]);
     expect(component.actualPoints).toEqual(0);
-    expect(component.moles.length).toEqual(component.BOARD_CELLS);
+    expect(component.moles.length).toEqual(BOARD_CELLS);
     expect(component.visibleMoles).toHaveSize(0);
     expect(component['intervalId']).toBeNull();
   });
@@ -130,7 +131,7 @@ describe('GameComponent', () => {
     expect(component['_snackBar'].open).toHaveBeenCalledWith(
       `Good Job ${component.username}!`,
       '',
-      { duration: component.NOTIFICATION_DURATION}
+      { duration: NOTIFICATION_DURATION}
     );
   });
 
