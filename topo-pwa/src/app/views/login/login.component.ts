@@ -32,4 +32,8 @@ export class LoginComponent {
   goToGame() {
     this.router.navigate(['/game', this.username.value]);
   }
+
+  goToUploadJson() {
+    this.router.navigate(['/upload']);
+  }
 }
